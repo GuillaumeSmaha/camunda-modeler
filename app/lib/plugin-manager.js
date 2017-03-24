@@ -49,10 +49,11 @@ function findPlugins(paths) {
     var globOptions = {
       cwd: path,
       nodir: true,
-      realpath: true
+      realpath: true,
+      ignore: 'plugins/**/node_modules/**/index.js'
     };
 
-    var locationPlugins = glob.sync('plugins/**/camunda-modeler.js', globOptions);
+    var locationPlugins = glob.sync('plugins/**/index.js', globOptions);
 
     plugins = plugins.concat(locationPlugins);
   });
