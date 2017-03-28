@@ -59,8 +59,12 @@ var pluginsManager = app.pluginsManager = new PluginsManager({
 // mode bootstrap issue is fixed in electron-connect
 app.menu = new Menu(process.platform,
   pluginsManager.getPlugins()
-    .filter(p => p.menu)
-    .map(p => p.menu)
+    .map(p => {
+      return {
+        menu: p.menu,
+        name: p.name
+      };
+    })
   );
 
 // bootstrap workspace behavior

@@ -977,18 +977,31 @@ MenuBuilder.prototype.appendPluginsMenu = function() {
   }
 
   var submenu = this.opts.plugins
-    .map(Plugin => {
-      var plugin = Plugin(app, this.opts.state);
+    .map(p => {
 
-      return plugin.map(menuDescriptor => {
-        return new MenuItem({
-          label: menuDescriptor.label,
-          accelerator: menuDescriptor.accelerator,
-          enabled: menuDescriptor.enabled(),
-          click: menuDescriptor.action,
-          submenu: menuDescriptor.submenu
-        });
-      });
+      var menuItemDescriptor = {
+        label: p.name,
+        enabled: false
+      };
+
+      if (p.menu) {
+        var menuEntries = p.menu(app, this.opts.state);
+
+        menuItemDescriptor.enabled = true;
+        menuItemDescriptor.submenu = Menu.buildFromTemplate(
+          menuEntries.map(menuDescriptor => {
+            return new MenuItem({
+              label: menuDescriptor.label,
+              accelerator: menuDescriptor.accelerator,
+              enabled: menuDescriptor.enabled(),
+              click: menuDescriptor.action,
+              submenu: menuDescriptor.submenu
+            });
+          })
+        );
+      }
+
+      return [ new MenuItem(menuItemDescriptor) ];
     })
     .reduce((previous, elem) => elem.concat(previous));
 

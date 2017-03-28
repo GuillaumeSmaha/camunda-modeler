@@ -21,6 +21,8 @@ function PluginsManager(options) {
 
       let plugin = {};
 
+      plugin.name = descriptor.name || '<unknown plugin>';
+
       if (descriptor.style) {
         plugin.style = path.join(pluginPath, descriptor.style);
       }
