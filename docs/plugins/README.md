@@ -16,6 +16,7 @@ Example:
 
 ```javascript
 module.exports = {
+  name: 'My Awesome Plugin', // the name of your plugin
   style: './style.css', // changing the appearance of the modeler
   menu: require('./menu.js'), // adding menu entries to the modeler
   script: './script.js' // extend the modeling tools for BPMN, CMMN and DMN
